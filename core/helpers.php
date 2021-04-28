@@ -27,6 +27,12 @@ function db(): PDO
 {
     global $dbInstance;
 
+    $db = [
+        'name'     => 'reparaturwerkstatt',
+        'username' => 'root',
+        'password' => '',
+    ];
+
     if ($dbInstance) {
         return $dbInstance;
     }
