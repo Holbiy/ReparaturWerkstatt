@@ -1,29 +1,30 @@
 <?php
-class Example
+class Order
 {
-	public int $id;
-	public string $name;
-	public string $email;
-	public string $phonenumber;
-	public int $urgency;
-	public date $orderdate;
-	public boolean $status;
-	public date $deadline;
-	public int $toolid;
+	public $id;
+	public $name;
+	public $email;
+	public $phonenumber;
+	public $urgency;
+	public $orderdate;
+	public $status;
+	public $deadline;
+	public $toolid;
 	public $pdo;
+	public $tool;
 
 	
-	public function __construct(int $id, string $name, string $email, int $urgency, int $toolid, string $phonenumber = null)
+	public function __construct(int $id = null, string $name = null, string $email = null, int $urgency = null, int $toolid = null, string $phonenumber = null)
 	{
 		$this->id = $id;
 		$this->name = $name;
 		$this->email = $email;
 		$this->urgency = $urgency;
-		$this->orderdate = date();
-		$this->deadline = calDeadline(date(), $this->urgency);
+		$this->orderdate = date("1");
+		//$this->deadline = $this->calDeadline(date("1") , $this->urgency);
 		$this->toolid = $toolid;
-		$this->$phonenumber = $phonenumber;
-		$this->$pdo = db();
+		$this->phonenumber = $phonenumber;
+		$this->pdo = db();
 	}
 
 	public function getById($id){
@@ -44,7 +45,7 @@ class Example
         return $task;
     }
 
-	public function addentrywithphone(){
+	public function add(){
 
         $statement = $this->pdo->prepare('INSERT INTO orders (name, email, phonenumber, urgency, orderdate, deadline, fk_Tool) VALUES (:name, :email, :phonenumber, :urgency, :oderdate, :deadline, :fk_Tool)');
         $statement->bindParam(':name', $this->name);
@@ -94,21 +95,22 @@ class Example
 
 	static function GetAll(){
         $pdo = db();
-        $statement = $pdo->prepare('SELECT * FROM orders');
+        $statement = $pdo->prepare('SELECT orders.id, orders.name as "name", email, phonenumber, urgency, orderdate, deadline, status, tools.name as "tool" FROM orders JOIN tools on tools.id = fk_tool');
         $statement->execute();
         $listoforders = $statement->fetchAll();
 		$result = array();
 		
 		foreach($listoforders as $order){
 			$task = new self();
+			$task->id = $order['id'];
 			$task->name = $order['name'];
 			$task->email = $order['email'];
 			$task->phonenumber = $order['phonenumber'];
-			$task->urgency = $order['urgency'];
+			$task->urgancy = $order['urgency'];
 			$task->orderdate = $order['orderdate'];
 			$task->deadline = $order['deadline'];
 			$task->status = $order['status'];
-			$task->fk_Tool = $order['fk_Tool'];
+			$task->tool = $order['tool'];
 
 			$result[] = $task;
 		}
@@ -116,9 +118,8 @@ class Example
 		return $result;
     }
 
-	public function calDeadline(date $startdate, int $urgency){
+	public function calDeadline($startdate, int $urgency){
 				
-		int $reparaturdauer;
 		switch ($urgency) {
 			case 1:
 				$reparaturdauer = 25;
@@ -139,4 +140,27 @@ class Example
 
 		return strtotime($startdate. ' + ' . $reparaturdauer .' days');
 	}
+
+	static function GetAllPending(){
+        $pdo = db();
+        $statement = $pdo->prepare('SELECT * FROM  orders WHERE status = :status');
+        $statement->bindParam(':status', $this->status);
+        $statement->execute();
+        $listoforders = $statement->fetchAll();
+        $result = array();
+        foreach($listoforders as $order){
+            $task = new self();
+            $task->id = $order['id'];
+            $task->name = $order['name'];
+            $task->email = $order['email'];
+            $task->phonenumber = $order['phonenumber'];
+            $task->urgency = $order['urgency'];
+            $task->orderdate = $order['orderdate'];
+            $task->deadline = $order['deadline'];
+            $task->status = $order['status'];
+            $task->fk_Tool = $order['fk_Tool'];
+            $result[] = $task;
+        }
+        return $result;
+    }
 }

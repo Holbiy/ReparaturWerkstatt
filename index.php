@@ -2,8 +2,8 @@
 require 'core/bootstrap.php';
 
 $routes = [
-	'/' => 'OrdersController@showall',
-	'/allorders' => 'OrdersController@showall',
+	'/' => 'OrdersController@index',
+	'/allorders' => 'OrdersController@index',
 	'/activeorders' => 'OrdersController@showactive',
 	'/create' => 'OrdersController@create',
 	'/createorder' => 'OrdersController@createorder',

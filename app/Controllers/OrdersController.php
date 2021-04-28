@@ -3,12 +3,13 @@
 class OrdersController{
     public function index(){
 
-        $orders = (new Order)::GetAllOrders;
+        $orders = (new Order)::GetAll();
 
         require './app/Views/allorders.view.php';
     }
 
     public function ShowActive(){
+
 
         require './app/Views/activeorders.view.php';
     }
@@ -19,6 +20,7 @@ class OrdersController{
         require './app/Views/createorder.view.php';
     }
 
+
     public function create(){
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             
@@ -27,24 +29,24 @@ class OrdersController{
             $phone = $_POST['phone'] ?? "";
             $email = $_POST['email'] ?? "";
             $urgency = $_POST['urgency'] ?? "";
-            $tool = $_POST['tool'] ?? "";
+            $toolid = $_POST['tool'] ?? "";
 
             $name = trim($name);
             $phone = trim($phone);
             $email = trim($email);
             $urgency = trim($urgency);
-            $tool = trim($tool);
+            $toolid = trim($toolid);
 
-            $errors = $this->validate($name, $phone, $email, $tool, $urgency);
+            //$errors = $this->validate($name, $phone, $email, $tool, $urgency);
+            $order = new Order(null, $name, $email, $urgency, $toolid, $phone);
+            $order->add();
 
         }else{
             header('Location: createorder');
             die();
         }
 
-        if(empty($errors)){
 
-        }
 
         $tools = $this->getAllTools();
         require './app/Views/createorder.view.php';
