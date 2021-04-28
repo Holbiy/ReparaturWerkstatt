@@ -11,7 +11,14 @@
 
 <body>
     <h1>Auftrag erstellen</h1>
-    <form action="" method="POST">
+    <?php if (!empty($errors)) : ?>    
+        <ul>
+            <?php foreach ($errors as $error): ?>
+                <li><?= $error ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+    <form action="/Reparaturwerkstatt/create" method="POST">
         <fieldset>
             <legend>Kontaktperson</legend>
 
@@ -39,9 +46,9 @@
 
             <label for="tool" require>Werkzeug</label>
             <select name="tool" id="tool">
-                <?php foreach($tools as $tool):?>
-                    <option value="<?=$tool['id']?>"><?=$tool['name']?></option>
-                <?php endforeach;?>
+                <?php foreach ($tools as $tool) : ?>
+                    <option value="<?= $tool['id'] ?>"><?= $tool['name'] ?></option>
+                <?php endforeach; ?>
             </select>
         </fieldset>
         <input type="submit" value="Auftrag erstellen">

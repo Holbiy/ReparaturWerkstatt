@@ -5,7 +5,8 @@ $routes = [
 	'/' => 'OrdersController@showall',
 	'/allorders' => 'OrdersController@showall',
 	'/activeorders' => 'OrdersController@showactive',
-	'/createorder' => 'OrdersController@create',
+	'/create' => 'OrdersController@create',
+	'/createorder' => 'OrdersController@createorder',
 	'/editorder' => 'OrdersController@edit'
 ];
 
