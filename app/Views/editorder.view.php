@@ -15,10 +15,10 @@
         <fieldset>
             <legend>Kontaktperson</legend>
 
-            <label for="name">Name</label>
+            <label for="name" require>Name</label>
             <input type="text" , id="name" , name="name">
 
-            <label for="email">E-Mail</label>
+            <label for="email" require>E-Mail</label>
             <input type="email" , id="email" , name="email">
 
             <label for="telefon">Telefon</label>
@@ -31,7 +31,7 @@
             <label for="status">Abgeschlossen</label>
             <input type="checkbox" name="abgeschlossen" id="abgeschlossen" value="1"><br><br>
 
-            <label for="urgency">Dringlichkeit</label>
+            <label for="urgency" require>Dringlichkeit</label>
             <select name="urgency" id="urgency">
                 <option value="1">sehr tief</option>
                 <option value="2">tief</option>
