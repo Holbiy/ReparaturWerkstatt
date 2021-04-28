@@ -16,10 +16,10 @@
             <legend>Kontaktperson</legend>
 
             <label for="name">Name</label>
-            <input type="text" , id="name" , name="name">
+            <input type="text" , id="name" , name="name" require>
 
             <label for="email">E-Mail</label>
-            <input type="email" , id="email" , name="email">
+            <input type="email" , id="email" , name="email" require>
 
             <label for="telefon">Telefon</label>
             <input type="text" , id="telefon">
@@ -28,7 +28,7 @@
         <fieldset>
             <legend>Auftragsinformationen</legend>
 
-            <label for="urgency">Dringlichkeit</label>
+            <label for="urgency" require>Dringlichkeit</label>
             <select name="urgency" id="urgency">
                 <option value="1">sehr tief</option>
                 <option value="2">tief</option>
@@ -37,13 +37,11 @@
                 <option value="5">sehr hoch</option>
             </select>
 
-            <label for="tool">Werkzeug</label>
+            <label for="tool" require>Werkzeug</label>
             <select name="tool" id="tool">
-                <option value="1">Hammer</option>
-                <option value="2">Schraubenzieher</option>
-                <option selected value="3">Motorsäge</option>
-                <option value="4">hoch</option>
-                <option value="5">sehr hoch</option>
+                <?php foreach($tools as $tool):?>
+                    <option value="<?=$tool['id']?>"><?=$tool['name']?></option>
+                <?php endforeach;?>
             </select>
         </fieldset>
         <input type="submit" value="Auftrag erstellen">
