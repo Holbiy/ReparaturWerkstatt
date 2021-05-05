@@ -4,10 +4,12 @@ require 'core/bootstrap.php';
 $routes = [
 	'/' => 'OrdersController@index',
 	'/allorders' => 'OrdersController@index',
-	'/activeorders' => 'OrdersController@showactive',
+	'/activeorders' => 'ActiveOrdersController@index',
 	'/create' => 'OrdersController@create',
-	'/createorder' => 'OrdersController@createorder',
-	'/editorder' => 'OrdersController@edit'
+	'/new' => 'OrdersController@new',
+	'/edit' => 'OrdersController@edit',
+	'/update' => 'OrdersController@update',
+	'/updatestatus' => 'OrdersController@updatestatus'
 ];
 
 $router = new Router($routes);
